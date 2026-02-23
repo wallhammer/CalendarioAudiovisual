@@ -62,7 +62,14 @@ export default function Calendario() {
       hora <= (e.HoraFinal || e.hora)
     );
   }
+  
+  // setEventos(prev => [...prev,setEvento({
+  //   NombreEvento:'platicas sexuales',
+  //   Hora:7,
+  //   Dia:dias[0],
+  //   Maestro:'francisco rabatte Walle',
 
+  // })])
 
     
   return (
