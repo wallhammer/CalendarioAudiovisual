@@ -1,19 +1,19 @@
 import React, { use, useEffect, useState } from 'react'
 import ModalBasico from './ModalBasico'
-import TooltipBasico from './TooltipBasico'
+
 import CeldaEvento from './CeldaEvento'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 
 
 
- const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-
-  const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
 
 
 export default function Calendario() {
+
+  
+  const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+
+  const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
 
   const [today, setToday ] = useState(new Date())
   const [mostrar, setMostrar] = useState(false)
@@ -29,6 +29,7 @@ export default function Calendario() {
       Grupo:''
     })
    
+    
   const [tooltip, setTooltip] = useState({
     evento:'',
     visible: false,
@@ -63,18 +64,10 @@ export default function Calendario() {
     );
   }
   
-  // setEventos(prev => [...prev,setEvento({
-  //   NombreEvento:'platicas sexuales',
-  //   Hora:7,
-  //   Dia:dias[0],
-  //   Maestro:'francisco rabatte Walle',
-
-  // })])
-
+  
     
   return (
-  <div className=" 
-   mt-5">
+  <div className="mt-5">
       <h2 className="text-center mb-4">Calendario Semanal de Audiovisual</h2>
       <p>{today.getDate()}/{dias[ today.getDay()-1]}/{today.getMonth()+1}/{today.getFullYear()}</p>
       <div className="table-responsive">
@@ -100,8 +93,6 @@ export default function Calendario() {
                       const duracion = (eventoEncontrado.HoraFinal || eventoEncontrado.Hora) - eventoEncontrado.Hora +1
                       
                      return (
-
-                      
                         <CeldaEvento 
                         key={j}
                         duracion={duracion}
@@ -136,7 +127,7 @@ export default function Calendario() {
 
        {
         mostrar && (
-          <ModalBasico cerrarModal={() => setMostrar(false)} evento={evento} setEvento={setEvento} setEventos={setEventos}/>          
+          <ModalBasico cerrarModal={() => setMostrar(false)} evento={evento} setEvento={setEvento} setEventos={setEventos} eventos={eventos}/>          
         )
        }
     </div>

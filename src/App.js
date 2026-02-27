@@ -1,6 +1,5 @@
 
 import './App.css';
-import Hoy from './component/Hoy';
 import Calendario from './component/Calendario';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalBasico from './component/ModalBasico';

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import TooltipBasico from './TooltipBasico'
 
 export default function CeldaEvento({key, duracion, encontrarEvento, eventoEncontrado, setTooltip, tooltip, dia, hora}) {

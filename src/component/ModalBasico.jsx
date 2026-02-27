@@ -3,7 +3,7 @@ import Calendario from './Calendario'
 
 const grupo = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R']
 
-export default function ModalBasico({cerrarModal, evento, setEvento, setEventos}) {
+export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     return (
@@ -88,9 +88,9 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos}
                 <div className='colabserGrup d-flex flex-row '>
                   <select value={evento.Grupo} 
                   className='m-1 form-control'
-                  onChange={(e) => {setEvento(prev => ({...prev, Grupo: parseInt(e.target.value)}))}}>
+                  onChange={(e) => {setEvento(prev => ({...prev, Grupo: e.target.value}))}}>
                     <option value="">Grupo</option>
-                    {grupo.map((g,i) => (<option key={i} value={g} >{g}</option>))}
+                    {grupo.map((grupo,i) => (<option key={i} value={grupo} >{grupo}</option>))}
                   
                   </select>
                   
@@ -126,6 +126,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos}
               <button className="btn btn-primary" 
               onClick={() =>{ 
                 setEventos(prev => [...prev,evento]);
+                
                 setEvento({
                   NombreEvento: '',
                   Hora: '',
