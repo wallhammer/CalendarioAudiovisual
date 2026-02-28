@@ -21,6 +21,7 @@ export default function Calendario() {
   const [eventos, setEventos] = useState([])
   const [evento, setEvento] = useState({
       NombreEvento: '',
+      fecha:'',
       Hora:'',
       HoraFinal:'',
       Dia:'',
