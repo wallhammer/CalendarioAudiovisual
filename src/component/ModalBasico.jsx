@@ -9,7 +9,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
   const MasForm = () => {
 
     return(
-      <button className="btn btn-primary " >mas</button>
+      <button className="btn btn-primary col align-self-end my-2">mas</button>
     )
   }
 
