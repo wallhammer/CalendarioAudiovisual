@@ -6,6 +6,10 @@ const grupo = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  const horasRest = (evento) => {
+    horas.find(evento.Hora)
+  }
+
     return (
       
       <div className="modal show d-block " tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -56,6 +60,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                     <p className='col-1'>-</p>
 
                     <select className='border-0 col-2 h-25 p-0' value={evento.HoraFinal}
+                      placeholder={evento.Hora + ':59'}
                       onChange={(e) => {
                         setEvento(prev => ({
                           ...prev,
@@ -63,11 +68,12 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                         }))
                       }}
                     >
-                      <option value="">00:00</option>
+                      
                       
                       {
-                        Array.from({length:16}, (_,i) => (
-                          <option key={i} value={i+7}>{(i+7) + ':59'}</option>
+                        horas.filter((num) => num >= evento.Hora).map((num) => 
+                        (
+                          <option key={num} value={num}>{num + ':59'}</option>
                         ))
                       }
                     </select>
