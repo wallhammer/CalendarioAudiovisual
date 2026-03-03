@@ -45,7 +45,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                         }))
                       }}
                     >
-                      <option value="">Selecciona una hora</option>
+                      <option value=''>Selecciona una hora</option>
                       {
                         horas.map((num) => (
                           <option key={num} value={num}>{num + ':00'}</option>
@@ -64,9 +64,10 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                       }}
                     >
                       <option value="">00:00</option>
+                      
                       {
-                        horas.map((num) => (
-                          <option key={num} value={num}>{num + ':00'}</option>
+                        Array.from({length:16}, (_,i) => (
+                          <option key={i} value={i+7}>{(i+7) + ':59'}</option>
                         ))
                       }
                     </select>
