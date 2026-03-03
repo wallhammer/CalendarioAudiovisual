@@ -6,8 +6,11 @@ const grupo = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-  const horasRest = (evento) => {
-    horas.find(evento.Hora)
+  const MasForm = () => {
+
+    return(
+      <button className="btn btn-primary " >mas</button>
+    )
   }
 
     return (
@@ -123,6 +126,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                     onPaste={(e) => e.preventDefault()}
                   />
                 </div>
+                {MasForm()}
               </form>
             </div>
 
