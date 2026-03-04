@@ -1,16 +1,52 @@
 import React, { useState } from 'react'
-import Calendario from './Calendario'
 
-const grupo = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R']
+const grupo = ['1A','1B','1C','1D','1E','1F','1G','1H','1I','1J','1K','1L','1M','1N','1O','1P','1Q','1R']
 
 export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  const [grupos, setGrupos] = useState([])
   const MasForm = () => {
 
     return(
-      <button className="btn btn-primary col align-self-end my-2">mas</button>
+      <button className="btn btn-primary col align-self-end mt-2 mb-1">mas</button>
     )
+  }
+
+  const GrupoForm = () => {
+    const form = <div className='colabserGrup d-flex flex-row '>
+                  <select value={evento.Grupo} 
+                  className='m-1 form-control'
+                  onChange={(e) => {setEvento(prev => ({...prev, Grupo: e.target.value}))}}>
+                    <option value="">Grupo</option>
+                    {grupo.map((grupo,i) => (<option key={i} value={grupo} >{grupo}</option>))}
+                  
+                  </select>
+                  
+                  {/* <input className='form-control' type="number" min='1' max='6' step='1' placeholder='Grado'
+                    onChange={ (e) => {
+                      setEvento(prev => ({
+                        ...prev,
+                        Grado:e.target.value
+                      }))
+                    }}
+                    onKeyDown={(e) => {
+                      const teclasPermitidas = [
+                        'ArrowUp',
+                        'ArrowDown',
+                        'Tab',
+                        'Backspace',
+                        'Delete'
+                      ];
+                      if (!teclasPermitidas.includes(e.key)) {
+                        e.preventDefault();
+                      }
+                    }}
+                    onPaste={(e) => e.preventDefault()}
+                  /> */}
+                </div>
+                
+    return form
   }
 
     return (
@@ -95,38 +131,8 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                     }))
                   }}
                 />
-                <div className='colabserGrup d-flex flex-row '>
-                  <select value={evento.Grupo} 
-                  className='m-1 form-control'
-                  onChange={(e) => {setEvento(prev => ({...prev, Grupo: e.target.value}))}}>
-                    <option value="">Grupo</option>
-                    {grupo.map((grupo,i) => (<option key={i} value={grupo} >{grupo}</option>))}
-                  
-                  </select>
-                  
-                  <input className='form-control' type="number" min='1' max='6' step='1' placeholder='Grado'
-                    onChange={ (e) => {
-                      setEvento(prev => ({
-                        ...prev,
-                        Grado:e.target.value
-                      }))
-                    }}
-                    onKeyDown={(e) => {
-                      const teclasPermitidas = [
-                        'ArrowUp',
-                        'ArrowDown',
-                        'Tab',
-                        'Backspace',
-                        'Delete'
-                      ];
-                      if (!teclasPermitidas.includes(e.key)) {
-                        e.preventDefault();
-                      }
-                    }}
-                    onPaste={(e) => e.preventDefault()}
-                  />
-                </div>
-                {MasForm()}
+                {GrupoForm()}
+                
               </form>
             </div>
 
@@ -144,7 +150,6 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                   HoraFinal:'',
                   Dia: '',
                   Maestro: '',
-                  Grado: 0,
                   Grupo: ''
                 });
                 cerrarModal();

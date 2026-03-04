@@ -19,7 +19,7 @@ export default function TooltipBasico({tooltip}) {
         </span>
         a
         <span className="bg-light border mx-1 px-1">
-          {tooltip.evento.HoraFinal}:00
+          {tooltip.evento.HoraFinal}:59
         </span>
       </p>
     </div>
@@ -27,7 +27,6 @@ export default function TooltipBasico({tooltip}) {
     <div className="my-2 border-bottom border-1 border-dark d-flex flex-column justify-content-center">
       <p className="mb-0">con el salon</p>
       <span className="mt-0 mb-1 p-1 border rounded-3 mx-auto bg-light">
-        {tooltip.evento.Grado}
         {tooltip.evento.Grupo}
       </span>
     </div>

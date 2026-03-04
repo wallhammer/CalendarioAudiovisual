@@ -26,7 +26,7 @@ export default function Calendario() {
       HoraFinal:'',
       Dia:'',
       Maestro:'',
-      Grado:0,
+      Grupos:[],
       Grupo:''
     })
    
