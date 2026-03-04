@@ -27,7 +27,14 @@ export default function TooltipBasico({tooltip}) {
     <div className="my-2 border-bottom border-1 border-dark d-flex flex-column justify-content-center">
       <p className="mb-0">con el salon</p>
       <span className="mt-0 mb-1 p-1 border rounded-3 mx-auto bg-light">
-        {tooltip.evento.Grupo}
+        <ul>
+          {tooltip.evento.Grupos.map(item =>
+            <li key={item}>
+              {item}
+            </li>
+          )}
+        </ul>
+        
       </span>
     </div>
 

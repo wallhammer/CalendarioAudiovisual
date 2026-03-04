@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const grupo = ['1A','1B','1C','1D','1E','1F','1G','1H','1I','1J','1K','1L','1M','1N','1O','1P','1Q','1R']
 
@@ -6,22 +6,26 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
   const [grupos, setGrupos] = useState([])
-  const MasForm = () => {
 
-    return(
-      <button className="btn btn-primary col align-self-end mt-2 mb-1">mas</button>
-    )
-  }
+ useEffect(() => {
+                  console.log("Evento Actualizado" ,evento.Grupo)
+                },[evento.Grupo])
 
   const GrupoForm = () => {
     const form = <div className='colabserGrup d-flex flex-row '>
-                  <select value={evento.Grupo} 
+                  <select value={evento.Grupos} 
                   className='m-1 form-control'
-                  onChange={(e) => {setEvento(prev => ({...prev, Grupo: e.target.value}))}}>
+                  onChange={(e) => {setEvento(prev => ({...prev, Grupos:[...e.target.value]}))}}>
                     <option value="">Grupo</option>
-                    {grupo.map((grupo,i) => (<option key={i} value={grupo} >{grupo}</option>))}
-                  
+                    {grupo.map((grupo) => (<option key={grupo} value={grupo} >{grupo}</option>))}
                   </select>
+                  <ul>
+                    {
+                      evento.Grupos.map(item =>
+                        <li key={item}><p>{item}</p></li>
+                      )
+                    }
+                  </ul>
                   
                   {/* <input className='form-control' type="number" min='1' max='6' step='1' placeholder='Grado'
                     onChange={ (e) => {
@@ -142,8 +146,9 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
               </button>
               <button className="btn btn-primary" 
               onClick={() =>{ 
+                setEvento(prev => ({...prev, Grupos: [...grupos] }))
                 setEventos(prev => [...prev,evento]);
-                
+                console.log(evento.Grupos)
                 setEvento({
                   NombreEvento: '',
                   Hora: '',
