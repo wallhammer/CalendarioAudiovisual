@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react'
 
-const grupo = ['1A','1B','1C','1D','1E','1F','1G','1H','1I','1J','1K','1L','1M','1N','1O','1P','1Q','1R']
+const grupo = ["1A","1B","1C","1D","1E","1F","1G","1H","1I","1J","1K","1L","1M","1N","1O","1P","1Q","1R"]
 
 export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
   const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-  const [grupos, setGrupos] = useState([])
+  const [asignados, setAsignados] = useState([])
 
  useEffect(() => {
-                  console.log("Evento Actualizado" ,evento.Grupo)
-                },[evento.Grupo])
+                  console.log(evento.Grupo)
+                },[evento])
 
   const GrupoForm = () => {
-    const form = <div className='colabserGrup d-flex flex-row '>
-                  <select value={evento.Grupos} 
-                  className='m-1 form-control'
-                  onChange={(e) => {setEvento(prev => ({...prev, Grupos:[...e.target.value]}))}}>
+    const form = <div className='colabserGrup d-flex flex-column '>
+                  <select 
+                  className='m-1 form-control '
+                  onChange={(e) => {
+                    setEvento(prev => ({...prev, Grupos:[...prev.Grupos,e.target.value]}))
+                    setAsignados(prev => [...prev, e.target.value])
+                    }}>
                     <option value="">Grupo</option>
                     {grupo.map((grupo) => (<option key={grupo} value={grupo} >{grupo}</option>))}
                   </select>
-                  <ul>
+                  <ul className='list-group'>
                     {
-                      evento.Grupos.map(item =>
-                        <li key={item}><p>{item}</p></li>
+                     asignados.map((item) =>
+                        <li className='list-group-item  m-0 p-0' key={item}><p>{item}</p></li>
                       )
                     }
                   </ul>
@@ -146,14 +149,13 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
               </button>
               <button className="btn btn-primary" 
               onClick={() =>{ 
-                setEvento(prev => ({...prev, Grupos: [...grupos] }))
                 setEventos(prev => [...prev,evento]);
-                console.log(evento.Grupos)
                 setEvento({
                   NombreEvento: '',
                   Hora: '',
                   HoraFinal:'',
                   Dia: '',
+                  Grupos:[],
                   Maestro: '',
                   Grupo: ''
                 });

@@ -7,11 +7,6 @@ export default function CeldaEvento({key, duracion, encontrarEvento, eventoEncon
     key={key}
     rowSpan={duracion}
     className='border rounded-4 bg-primary text-white'
-
-        
-    
-      
-      
       onMouseEnter={(e) => {
         const ev = encontrarEvento(dia,hora)
         if (ev) {
