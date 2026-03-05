@@ -30,27 +30,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
                     }
                   </ul>
                   
-                  {/* <input className='form-control' type="number" min='1' max='6' step='1' placeholder='Grado'
-                    onChange={ (e) => {
-                      setEvento(prev => ({
-                        ...prev,
-                        Grado:e.target.value
-                      }))
-                    }}
-                    onKeyDown={(e) => {
-                      const teclasPermitidas = [
-                        'ArrowUp',
-                        'ArrowDown',
-                        'Tab',
-                        'Backspace',
-                        'Delete'
-                      ];
-                      if (!teclasPermitidas.includes(e.key)) {
-                        e.preventDefault();
-                      }
-                    }}
-                    onPaste={(e) => e.preventDefault()}
-                  /> */}
+                  
                 </div>
                 
     return form
