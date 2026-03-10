@@ -11,7 +11,7 @@ import CeldaEvento from './CeldaEvento'
 export default function Calendario() {
 
   
-  const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  const horas = Array.from({length:14}, (_,i) => i+7)
 
   const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
 
@@ -44,8 +44,8 @@ export default function Calendario() {
   const ModalEvent = (flag,hora,dia) => {
     setEvento(prev => ({
       ...prev,
-      Hora: horas[hora],
-      Dia: dias[dia]
+      Hora: hora,
+      Dia: dia
     }))
     setMostrar(flag)
   }
@@ -76,16 +76,16 @@ export default function Calendario() {
           <thead className="table-light">
             <tr>
               <th scope="col">Hora</th>
-              {dias.map((dia, index) => (
-                <th scope="col" key={index}>{dia}</th>
+              {dias.map(dia => (
+                <th scope="col" key={dia}>{dia}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {horas.map((hora, i) => (
-              <tr key={i} >
+            {horas.map(hora => (
+              <tr key={hora} >
                 <th scope="row" >{hora}:00</th>
-                {dias.map((dia, j) => {
+                {dias.map(dia => {
                     const eventoEncontrado = encontrarEvento(dia, hora)
                     const ocupado = estaDentroDeEvento(dia, hora);
 
@@ -95,7 +95,7 @@ export default function Calendario() {
                       
                      return (
                         <CeldaEvento 
-                        key={j}
+                        key={dia}
                         duracion={duracion}
                         rowSpan={duracion}
                         encontrarEvento={encontrarEvento} 
@@ -113,8 +113,8 @@ export default function Calendario() {
                     }
                     return (
                       <td
-                        key={j}
-                        onClick={() => ModalEvent(true, i, j)}
+                        key={dia}
+                        onClick={() => ModalEvent(true, hora, dia)}
                         className="celda-fija px-0 py-0"
                         style={{ cursor: 'pointer' }}
                       />
