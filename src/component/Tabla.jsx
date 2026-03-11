@@ -1,65 +1,40 @@
-import React from 'react'
-import Calendario from './Calendario';
-import CeldaEvento from './CeldaEvento';
-import TooltipBasico from './TooltipBasico'
 
-export default function ({horas, dias, encontrarEvento, estaDentroDeEvento, ModalEvent,setTooltip, tooltip }) {
+
+export default function () {
+
+  const Semana = Array.from({length:4},(_,i) => i+1)
+  const Dias = Array.from({length:7},(_,i) => i+1)
+  const Horas = Array.from({length:14}, (_,i) => i+7)
+
   return (
     <div className="table-responsive">
-            <table className="table table-bordered text-center align-middle">
+      {
+        Semana.map(semana => (
+           <table className="table table-bordered text-center align-middle">
               <thead className="table-light">
                 <tr>
                   <th scope="col">Hora</th>
-                  {dias.map((dia, index) => (
-                    <th scope="col" key={index}>{dia}</th>
+                  {Dias.map(dia => (
+                    <th scope="col" key={dia}>{dia}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {horas.map((hora, i) => (
-                  <tr key={i} >
+                {Horas.map(hora => (
+                  <tr key={hora} >
                     <th scope="row" >{hora}:00</th>
-                    {dias.map((dia, j) => {
-                        const eventoEncontrado = encontrarEvento(dia, hora)
-                        const ocupado = estaDentroDeEvento(dia, hora);
-    
-                        if (ocupado) return null
-                        if (eventoEncontrado) {
-                          const duracion = (eventoEncontrado.HoraFinal || eventoEncontrado.Hora) - eventoEncontrado.Hora +1
-                          
-                         return (
-    
-                          
-                            <CeldaEvento 
-                            key={j}
-                            duracion={duracion}
-                            rowSpan={duracion}
-                            encontrarEvento={encontrarEvento} 
-                            eventoEncontrado={eventoEncontrado}
-                            setTooltip={setTooltip}
-                            tooltip={tooltip}
-                            dia={dia}
-                            hora={hora}
-                            style={{
-                              cursor:eventoEncontrado? 'none': 'pointer',
-                            }}
-                            />
-                          
-                          );
-                        }
-                        return (
-                          <td
-                            key={j}
-                            onClick={() => ModalEvent(true, i, j)}
-                            className="celda-fija px-0 py-0"
-                            style={{ cursor: 'pointer' }}
-                          />
-                        );
-                    })}
+                    {
+                      Dias.map(dia => (
+                        <td key={toString(dia)+toString(hora)}>{dia}/ {hora}:00 </td>
+                      ))
+                    }
                   </tr>
                 ))}
               </tbody>
             </table>
+        ))
+      }
+           
           </div>
   )
 }
