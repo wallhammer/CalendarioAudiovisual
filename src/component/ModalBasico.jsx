@@ -7,6 +7,7 @@ export default function ModalBasico({cerrarModal, evento, setEvento, setEventos,
 
   const horas = Array.from({length:14}, (_,i) => i+7)
   const [asignados, setAsignados] = useState([])
+  
 
   // const FechaModal = (evento) => {
   //   var diasem = dias[new Date().getDay - 1]
