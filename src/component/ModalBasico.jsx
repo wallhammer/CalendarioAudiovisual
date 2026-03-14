@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
 const grupo = ["1A","1B","1C","1D","1E","1F","1G","1H","1I","1J","1K","1L","1M","1N","1O","1P","1Q","1R"]
+const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
 
 export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
 
-  const horas = [7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  const horas = Array.from({length:14}, (_,i) => i+7)
   const [asignados, setAsignados] = useState([])
+  
 
- useEffect(() => {
-                  console.log(evento.Grupo)
-                },[evento])
-
+  // const FechaModal = (evento) => {
+  //   var diasem = dias[new Date().getDay - 1]
+  //   var fecha = ''
+  //   evento.dia === diasem && (fecha = new Date().getFullYear)
+  //   return fecha
+  // }
+  
   const GrupoForm = () => {
     const form = <div className='colabserGrup d-flex flex-column '>
                   <select 
