@@ -11,11 +11,7 @@ import CeldaEvento from './CeldaEvento'
 export default function Calendario() {
 
   
-<<<<<<< HEAD
   const horas = Array.from({length:14}, (_, i) => i+7)
-=======
-  const horas = Array.from({length:14}, (_,i) => i+7)
->>>>>>> 2fdb359f271a95b3211f40771c45911e275569d6
 
   const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
 
@@ -88,12 +84,7 @@ export default function Calendario() {
             {horas.map(hora => (
               <tr key={hora} >
                 <th scope="row" >{hora}:00</th>
-<<<<<<< HEAD
-                {dias.map((dia, j) => {
-                      
-=======
                 {dias.map(dia => {
->>>>>>> 2fdb359f271a95b3211f40771c45911e275569d6
                     const eventoEncontrado = encontrarEvento(dia, hora)
                     const ocupado = estaDentroDeEvento(dia, hora);
 

@@ -1,11 +1,8 @@
 
 import './App.css';
 import Calendario from './component/Calendario';
-<<<<<<< HEAD
-=======
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalBasico from './component/ModalBasico';
->>>>>>> 2fdb359f271a95b3211f40771c45911e275569d6
 import Tabla from './component/Tabla';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
