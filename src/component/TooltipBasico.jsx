@@ -15,7 +15,7 @@ export default function TooltipBasico({tooltip}) {
       <p className="d-flex justify-content-center my-1">
         De
         <span className="bg-light border mx-1 px-1">
-          {tooltip.evento.Hora}:00
+          {tooltip.evento.start}
         </span>
         a
         <span className="bg-light border mx-1 px-1">
