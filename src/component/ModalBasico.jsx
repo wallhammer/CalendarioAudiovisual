@@ -1,157 +1,102 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { format } from 'date-fns'
 
-const grupo = ["1A","1B","1C","1D","1E","1F","1G","1H","1I","1J","1K","1L","1M","1N","1O","1P","1Q","1R"]
-const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
+const grupos = ["1A","1B","1C","1D","1E","1F","1G","1H","1I","1J","1K","1L","1M","1N","1O","1P","1Q","1R"]
 
-export default function ModalBasico({cerrarModal, evento, setEvento, setEventos, }) {
-
-  const horas = Array.from({length:14}, (_,i) => i+7)
+export default function ModalBasico({ cerrarModal, slotInfo, setEventos }) {
+  const [nombre, setNombre] = useState('')
+  const [maestro, setMaestro] = useState('')
   const [asignados, setAsignados] = useState([])
-  
+  const [start, setStart] = useState(slotInfo?.start || new Date())
+  const [end, setEnd] = useState(slotInfo?.end || new Date())
 
-  // const FechaModal = (evento) => {
-  //   var diasem = dias[new Date().getDay - 1]
-  //   var fecha = ''
-  //   evento.dia === diasem && (fecha = new Date().getFullYear)
-  //   return fecha
-  // }
-  
-  const GrupoForm = () => {
-    const form = <div className='colabserGrup d-flex flex-column '>
-                  <select 
-                  className='m-1 form-control '
-                  onChange={(e) => {
-                    setEvento(prev => ({...prev, Grupos:[...prev.Grupos,e.target.value]}))
-                    setAsignados(prev => [...prev, e.target.value])
-                    }}>
-                    <option value="">Grupo</option>
-                    {grupo.map((grupo) => (<option key={grupo} value={grupo} >{grupo}</option>))}
-                  </select>
-                  <ul className='list-group'>
-                    {
-                     asignados.map((item) =>
-                        <li className='list-group-item  m-0 p-0' key={item}><p>{item}</p></li>
-                      )
-                    }
-                  </ul>
-                  
-                  
-                </div>
-                
-    return form
+  const guardar = () => {
+    const nuevoEvento = {
+      NombreEvento: nombre,
+      start,
+      end,
+      Maestro: maestro,
+      Grupos: asignados,
+    }
+    setEventos(prev => [...prev, nuevoEvento])
+    cerrarModal()
   }
 
-    return (
-      
-      <div className="modal show d-block " tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <div className="modal-dialog">
-          <div className="modal-content">
-            
-            <div className="modal-header bg-light">
-                <h5 className='mb-0 w-100'>
-                  <input 
-                  type="text" 
-                  placeholder='Evento' 
-                  className='border-0 border-bottom me-0 bg-light w-100'
-                  onChange={(e) => {
-                    setEvento(prev => ({
-                      ...prev,
-                      NombreEvento:e.target.value
-                    }))}}/>
-                </h5>
-                
-              <button type="button" className="btn-close" onClick={cerrarModal}></button>
-            </div>
+  return (
+    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header bg-light">
+            <h5 className="mb-0 w-100">
+              <input
+                type="text"
+                placeholder="Evento"
+                className="border-0 border-bottom bg-light w-100"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </h5>
+            <button type="button" className="btn-close" onClick={cerrarModal}></button>
+          </div>
 
-            <div className="modal-body">
-              <form action="" className='form-group d-flex flex-column'>
-
-                <div className='container'>
-                  <p className='my-0'>Dia {evento.Dia}</p>
-                  <div className='row justify-content-center form-outline mb-3 mx-auto'>
-
-                    <p className='col-1'>De </p>
-
-                    <select className='border-0 col-2 h-25 p-0' value={evento.Hora}
-                      onChange={(e) => {
-                        setEvento(prev => ({
-                          ...prev,
-                          Hora: parseInt(e.target.value)
-                        }))
-                      }}
-                    >
-                      <option value=''>Selecciona una hora</option>
-                      {
-                        horas.map((num) => (
-                          <option key={num} value={num}>{num + ':00'}</option>
-                        ))
-                      }
-                    </select>
-
-                    <p className='col-1'>-</p>
-
-                    <select className='border-0 col-2 h-25 p-0' value={evento.HoraFinal}
-                      placeholder={evento.Hora + ':59'}
-                      onChange={(e) => {
-                        setEvento(prev => ({
-                          ...prev,
-                          HoraFinal: parseInt(e.target.value)
-                        }))
-                      }}
-                    >
-                      
-                      
-                      {
-                        horas.filter((num) => num >= evento.Hora).map((num) => 
-                        (
-                          <option key={num} value={num}>{num + ':59'}</option>
-                        ))
-                      }
-                    </select>
-                  </div>
+          <div className="modal-body">
+            <form className="form-group d-flex flex-column">
+              <div className="container">
+                <div className="row mb-3">
+                  <label className="col-2">Inicio:</label>
+                  <input
+                    type="datetime-local"
+                    className="form-control col"
+                    value={format(start, "yyyy-MM-dd'T'HH:mm")}
+                    onChange={(e) => setStart(new Date(e.target.value))}
+                  />
                 </div>
-                
+                <div className="row mb-3">
+                  <label className="col-2">Fin:</label>
+                  <input
+                    type="datetime-local"
+                    className="form-control col"
+                    value={format(end, "yyyy-MM-dd'T'HH:mm")}
+                    onChange={(e) => setEnd(new Date(e.target.value))}
+                  />
+                </div>
+              </div>
 
-                <input 
-                  type="text" 
-                  placeholder='Docente Responsable'
-                  className='form-control mb-2'
-                  onChange={ (e) => {
-                    setEvento(prev => ({
-                      ...prev,
-                      Maestro:e.target.value
-                    }))
-                  }}
-                />
-                {GrupoForm()}
-                
-              </form>
-            </div>
+              <input
+                type="text"
+                placeholder="Docente Responsable"
+                className="form-control mb-2"
+                value={maestro}
+                onChange={(e) => setMaestro(e.target.value)}
+              />
 
-            <div className="modal-footer">
-              <button className="btn btn-secondary" onClick={cerrarModal}>
-                Cerrar
-              </button>
-              <button className="btn btn-primary" 
-              onClick={() =>{ 
-                setEventos(prev => [...prev,evento]);
-                setEvento({
-                  NombreEvento: '',
-                  Hora: '',
-                  HoraFinal:'',
-                  Dia: '',
-                  Grupos:[],
-                  Maestro: '',
-                  Grupo: ''
-                });
-                cerrarModal();
-                }}>
-                Guardar cambios
-              </button>
-            </div>
+              <select
+                className="form-control mb-2"
+                onChange={(e) => {
+                  if (e.target.value && !asignados.includes(e.target.value)) {
+                    setAsignados(prev => [...prev, e.target.value])
+                  }
+                }}
+              >
+                <option value="">Grupo</option>
+                {grupos.map(g => (
+                  <option key={g} value={g}>{g}</option>
+                ))}
+              </select>
+              <ul className="list-group">
+                {asignados.map(item => (
+                  <li className="list-group-item p-1" key={item}>{item}</li>
+                ))}
+              </ul>
+            </form>
+          </div>
 
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={cerrarModal}>Cerrar</button>
+            <button className="btn btn-primary" onClick={guardar}>Guardar cambios</button>
           </div>
         </div>
       </div>
+    </div>
   )
 }

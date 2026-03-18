@@ -1,136 +1,64 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
+import { format, parse, startOfWeek, getDay } from 'date-fns'
+import { es } from 'date-fns/locale'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import ModalBasico from './ModalBasico'
+import TooltipBasico from './TooltipBasico'
 
-import CeldaEvento from './CeldaEvento'
-
-
-
-
-
+const locales = { 'es': es }
+const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales })
+const messages = {
+  today: 'Hoy', previous: 'Anterior', next: 'Siguiente',
+  month: 'Mes', week: 'Semana', day: 'Día', agenda: 'Agenda',
+  date: 'Fecha', time: 'Hora', event: 'Evento', noEventsInRange: 'Sin eventos',
+}
 
 export default function Calendario() {
-
-  
-  const horas = Array.from({length:14}, (_,i) => i+7)
-
-  const dias = ['lunes','Martes','Miercoles', 'Jueves','Viernes','Sábado', 'Domingo']
-
-  const [today, setToday ] = useState(new Date())
-  const [mostrar, setMostrar] = useState(false)
-
   const [eventos, setEventos] = useState([])
-  const [evento, setEvento] = useState({
-      NombreEvento: '',
-      fecha:'',
-      Hora:'',
-      HoraFinal:'',
-      Dia:'',
-      Maestro:'',
-      Grupos:[],
-      Grupo:''
-    })
-   
-    
-  const [tooltip, setTooltip] = useState({
-    evento:'',
-    visible: false,
-    x: 0,
-    y: 0
-  });
+  const [mostrar, setMostrar] = useState(false)
+  const [slotInfo, setSlotInfo] = useState(null)
+  const [tooltip, setTooltip] = useState({ evento: null, visible: false, x: 0, y: 0 })
 
-
-  
-
-  const ModalEvent = (flag,hora,dia) => {
-    setEvento(prev => ({
-      ...prev,
-      Hora: hora,
-      Dia: dia
-    }))
-    setMostrar(flag)
+  const handleSelectSlot = (slot) => {
+    setSlotInfo(slot)
+    setMostrar(true)
   }
 
-
-
-   
-  const encontrarEvento = (dia, hora) => {
-    return eventos.find(e => e.Dia === dia && e.Hora === hora)
+  const handleSelectEvent = (evento, e) => {
+    setTooltip({ evento, visible: true, x: e.clientX, y: e.clientY })
+    setTimeout(() => setTooltip(prev => ({ ...prev, visible: false })), 3000)
   }
 
-  const estaDentroDeEvento = (dia, hora) => {
-    return eventos.some(e =>
-      e.Dia === dia &&
-      hora > e.Hora &&
-      hora <= (e.HoraFinal || e.hora)
-    );
-  }
-  
-  
-    
   return (
-  <div className="mt-5">
-      <h2 className="text-center mb-4">Calendario Semanal de Audiovisual</h2>
-      <p>{today.getDate()}/{dias[ today.getDay()-1]}/{today.getMonth()+1}/{today.getFullYear()}</p>
-      <div className="table-responsive">
-        <table className="table table-bordered text-center align-middle">
-          <thead className="table-light">
-            <tr>
-              <th scope="col">Hora</th>
-              {dias.map(dia => (
-                <th scope="col" key={dia}>{dia}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {horas.map(hora => (
-              <tr key={hora} >
-                <th scope="row" >{hora}:00</th>
-                {dias.map(dia => {
-                    const eventoEncontrado = encontrarEvento(dia, hora)
-                    const ocupado = estaDentroDeEvento(dia, hora);
-
-                    if (ocupado) return null
-                    if (eventoEncontrado) {
-                      const duracion = (eventoEncontrado.HoraFinal || eventoEncontrado.Hora) - eventoEncontrado.Hora +1
-                      
-                     return (
-                        <CeldaEvento 
-                        key={dia}
-                        duracion={duracion}
-                        rowSpan={duracion}
-                        encontrarEvento={encontrarEvento} 
-                        eventoEncontrado={eventoEncontrado}
-                        setTooltip={setTooltip}
-                        tooltip={tooltip}
-                        dia={dia}
-                        hora={hora}
-                        style={{
-                          cursor:eventoEncontrado? 'none': 'pointer',
-                        }}
-                        />
-                      
-                      );
-                    }
-                    return (
-                      <td
-                        key={dia}
-                        onClick={() => ModalEvent(true, hora, dia)}
-                        className="celda-fija px-0 py-0"
-                        style={{ cursor: 'pointer' }}
-                      />
-                    );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-       {
-        mostrar && (
-          <ModalBasico cerrarModal={() => setMostrar(false)} evento={evento} setEvento={setEvento} setEventos={setEventos} eventos={eventos}/>          
-        )
-       }
+    <div className='mt-3' style={{ height: '85vh' }}>
+      <h2 className='text-center mb-3'>Calendario Semanal de Audiovisual</h2>
+      <Calendar
+        localizer={localizer}
+        culture='es'
+        events={eventos}
+        defaultView='week'
+        views={['week', 'day', 'agenda']}
+        min={new Date(0, 0, 0, 7, 0)}
+        max={new Date(0, 0, 0, 21, 0)}
+        titleAccessor='NombreEvento'
+        startAccessor='start'
+        endAccessor='end'
+        selectable
+        onSelectSlot={handleSelectSlot}
+        onSelectEvent={handleSelectEvent}
+        messages={messages}
+        style={{ height: '100%' }}
+      />
+      {mostrar && (
+        <ModalBasico
+          cerrarModal={() => setMostrar(false)}
+          slotInfo={slotInfo}
+          setEventos={setEventos}
+          eventos={eventos}
+        />
+      )}
+      {tooltip.visible && tooltip.evento && <TooltipBasico tooltip={tooltip} />}
     </div>
   )
 }
