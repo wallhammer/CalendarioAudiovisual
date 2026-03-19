@@ -1,6 +1,7 @@
 import React from 'react'
 
 export default function TooltipBasico({tooltip}) {
+  const formatTime = (hour) => `${String(hour).padStart(2, '0')}:00`;
   return (
     <div
   className="card text-dark bg-white mb-3 tooltip-evento p-0"
@@ -15,11 +16,11 @@ export default function TooltipBasico({tooltip}) {
       <p className="d-flex justify-content-center my-1">
         De
         <span className="bg-light border mx-1 px-1">
-          {tooltip.evento.start}
+          {formatTime(tooltip.evento.Hora)}
         </span>
         a
         <span className="bg-light border mx-1 px-1">
-          {tooltip.evento.HoraFinal}:59
+          {formatTime(tooltip.evento.Horafinal)}
         </span>
       </p>
     </div>
